@@ -2,7 +2,6 @@
   width: 100%; 
   height: 100vh;
   display: flex;
-  align-items: center; 
   justify-content: center; 
   background-color: #222229;
 }
@@ -23,14 +22,13 @@
   height: auto;
   background-color: #222229;
   display: flex;
-  margin-top: 28px;
   flex-direction: column; /* Робимо вертикальний розподіл */
   margin-bottom: 20px;
 }
 
 .Team-member .top {
   width: auto; /* Робимо ширину 100% від батьківського контейнера */
-  height: auto; /* Половина висоти Team-member */
+  height: auto; 
   display: flex;
   justify-content: center; 
   background-color: #222229;
@@ -115,5 +113,33 @@
 
   .Team-box {
     padding: 50px 15px;
+  }
+}
+
+
+@media (max-width: 420px) {
+  .Member-Icon {
+    width: 80px; 
+    height: 80px; 
+    border-radius: 50%; /* Делает изображение круглым */
+    object-fit: cover; /* Обрезает изображение, сохраняя пропорции */
+  }
+ 
+  .member-title {
+    font-size: 10px;
+   
+  
+  }
+  
+  .member-text {
+    
+    font-size: 15px;
+    
+  
+  }
+
+  .Team-box {
+    padding: 50px 15px;
+    gap: 0px;
   }
 }

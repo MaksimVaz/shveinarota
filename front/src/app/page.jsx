@@ -10,6 +10,7 @@ import PartnersBlock from '$component/info/PartnersBlock/PartnersBlock';
 import dynamic from "next/dynamic";
 const MapBlock = dynamic(() => import('$component/info/MapBlock/MapBlock'), { ssr: false });
 import MediaBlock from "$component/info/MediaBlock/MediaBlock";
+import Footer from "$component/Footer";
 
 export default function InfoPage() {
 
@@ -45,6 +46,7 @@ export default function InfoPage() {
       <PartnersBlock />
       <MediaBlock/>
       <MapBlock />
+      <Footer/>
     </main>
   );
 }

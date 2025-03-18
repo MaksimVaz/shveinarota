@@ -24,7 +24,7 @@
     gap: 5px;
     
     width: max-content; /* Подгоняет размер блока под контент */
-    margin-bottom: 5%; /* Добавляем небольшой отступ */
+    margin-bottom: 140px; /* Добавляем небольшой отступ */
 }
 
 
@@ -41,3 +41,21 @@
     user-select: none; 
     cursor: pointer; 
 }
+
+@media (max-width: 500px) {
+    .About_scroll_button {
+        font-size: 30px;
+    }
+    .About_scroll_image {
+        width: 150px;
+        height:30px;
+    }
+
+    .About_section {
+        padding-bottom: 20%;
+    }
+  }
+
+  @media (max-height: 500px) {
+ 
+  }

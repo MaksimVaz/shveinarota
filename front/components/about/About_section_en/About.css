@@ -194,6 +194,9 @@
 }
 
 @media (max-width: 520px) {
+  .About-box {
+    padding-top: 5%;
+  }
   .About-section {
     height: 750px;
   }

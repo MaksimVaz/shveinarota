@@ -16,17 +16,21 @@ const AboutSection = () => {
   return (
     <div ref={sectionRef} className="About_section">
       <div className="About_image_box">
-        <button className="About_scroll_button" onClick={handleScrollClick}>
-          Наша історія
-        </button>
-        <Image
-          src="/images/about/icons/sign.png"
-          alt="Scroll Down"
-          width={150}
-          height={125}
-          className="About_scroll_image"
-          onClick={handleScrollClick}
-        />
+        <div onClick={handleScrollClick} >
+          <button className="About_scroll_button">
+          Швейна Рота
+          </button>
+          <button className="About_scroll_button">
+            Наша історія
+          </button>
+          <Image
+            src="/images/about/icons/sign.png"
+            alt="Scroll Down"
+            width={150}
+            height={125}
+            className="About_scroll_image"
+          />
+        </div>
       </div>
     </div>
   );
