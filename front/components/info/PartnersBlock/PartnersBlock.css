@@ -1,9 +1,11 @@
 .partners {
-	background: #ebddd0;
+	background: #2e2e35;
 	position: relative;
 	z-index: 2;
-	border-bottom: 12px solid #2e2e35;
-	box-shadow: 0px 0px 20px 8px rgba(0, 0, 0, 0.562);
+	border-bottom: clamp(6px, 1vw, 12px) solid #2e2e35;
+	box-shadow: 0px 0px clamp(10px, 2vw, 20px) clamp(4px, 1vw, 8px) rgba(0, 0, 0, 0.562);
+	padding-bottom: clamp(10px, 5vw, 20px);
+	text-align: center;
 }
 
 .partners__wrapper {
@@ -12,31 +14,142 @@
 
 .partners__container {
 	max-width: 1200px;
-	padding: 55px 15px;
+	padding: clamp(10px, 3vw, 15px);
 	margin: 0 auto;
 	cursor: pointer;
 }
 
-.partners__partner img {
-	max-height: 130px;
-	max-width: 200px;
-}
-
 .partners__title {
 	color: #ebddd0;
-	padding: 20px 0px 0px 0px;
+	padding: clamp(10px, 2vw, 20px) 0 0 0;
 	background-color: #2e2e35;
-	border-top: 12px solid #2e2e35;
+	border-top: clamp(6px, 1vw, 12px) solid #2e2e35;
+	font-size: clamp(18px, 4vw, 32px);
+	display: inline-block;
+	position: relative;
 }
 
-.partners__slide {
-	width: auto;
+.partners__line {
+	width: calc(100% + clamp(10px, 2vw, 30px));
+	max-width: 300px;
+	height: clamp(2px, 0.5vw, 4px);
+	background-color: #50d37c;
+	margin: clamp(2px, 1vw, 5px) auto clamp(5px, 2vw, 15px);
+	border-radius: 2px;
+	position: relative;
+}
+
+.partners__row {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: clamp(10px, 1.5vw, 20px);
+	justify-items: center;
+	align-items: center;
+	height: clamp(150px, 12vw, 200px);
+	width: 100%;
+}
+
+.partners__partner {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	user-select: none;
+	width: 100%;
 }
 
-.partners .swiper-slide {
-	width: auto !important;
+.partner__img-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+
+.partners__partner img {
+	width: clamp(100px, 12vw, 140px); /* Увеличил размер картинок */
+	height: clamp(100px, 12vw, 140px); /* Увеличил размер картинок */
+	object-fit: contain;
+	transition: transform 0.3s ease;
+}
+
+.partners__partner img:hover {
+	transform: scale(1.1);
+}
+
+.partners__slider .slick-list {
+	height: clamp(150px, 12vw, 200px);
+}
+
+.slick-dots {
+	position: absolute;
+	bottom: clamp(-25px, -5vw, -30px);
+	transform: scale(0.8);
+	display: flex !important;
+	justify-content: center;
+	align-items: center;
+	gap: clamp(4px, 1vw, 6px);
+	width: auto;
+}
+
+.slick-dots li {
+	width: clamp(5px, 1vw, 10px);
+	height: clamp(5px, 1vw, 10px);
+	border: clamp(1px, 0.6vw, 2.5px) solid rgb(52, 52, 59);
+	background-color: rgb(232, 220, 208);
+	border-radius: 50%;
+	box-shadow: 0px 0px clamp(8px, 2vw, 16px) clamp(0.7px, 0.5vw, 1.4px) rgba(0, 0, 0, 0.42);
+	transition: all 0.3s ease;
+	cursor: pointer;
+	list-style: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.slick-dots li.slick-active {
+	background-color: rgb(52, 52, 59);
+	border-color: rgb(232, 220, 208);
+	transform: scale(0.9);
+}
+
+.slick-dots li button {
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	border: none;
+	background: transparent;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+	.partners__row {
+		grid-template-columns: repeat(4, 1fr); /* 4 элемента в ряд */
+		gap: 10px; /* Уменьшил расстояние между картинками */
+	}
+
+	.partners__slider .slick-list {
+		height: clamp(150px, 10vw, 200px); /* Уменьшена высота слайдера */
+	}
+}
+
+@media (max-width: 768px) {
+	.partners__row {
+		grid-template-columns: repeat(3, 1fr); /* 3 элемента в ряд */
+		gap: 8px; /* Уменьшил расстояние между картинками */
+	}
+
+	.partners__slider .slick-list {
+		height: clamp(140px, 9vw, 180px); /* Уменьшена высота слайдера */
+	}
+}
+
+@media (max-width: 480px) {
+	.partners__row {
+		grid-template-columns: repeat(2, 1fr); /* 2 элемента в ряд */
+		gap: 5px; /* Уменьшил расстояние между картинками */
+	}
+
+	.partners__slider .slick-list {
+		height: clamp(120px, 8vw, 160px); /* Уменьшена высота слайдера */
+	}
 }
