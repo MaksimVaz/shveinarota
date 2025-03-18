@@ -1,0 +1,46 @@
+
+.About_page_scroll_menu {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 1000; /* Поверх всех элементов */
+  padding-right: 1%;
+}
+.About_page_scroll_menu button {
+  width: 18px;
+  height: 18px;
+  border-radius: 0; /* Убираем скругление */
+  background-color: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+  transform: rotate(45deg); /* Поворачиваем в ромб */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.About_page_scroll_menu button.active {
+  border-color: white;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  transform: rotate(45deg) scale(1.2); /* Увеличиваем, но оставляем ромб */
+}
+
+
+.About_page_scroll_menu button:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+  transform: rotate(45deg) scale(1.1);
+}
+
+@media (max-width: 1090px) { 
+    .About_page_scroll_menu button {
+      width: 14px;
+      height: 14px;
+    }
+}

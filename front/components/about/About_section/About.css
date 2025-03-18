@@ -1,246 +1,43 @@
-.About-section {
-  width: 100%;
-  height: 770px;
-  background-color: rgb(42, 42, 50);
-  display: flex;
-  justify-content: center;
-}
-
-.About-box {
-  height: 770px;
-  width: 1700px;
-  background-image: url("/images/about/Background.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
-}
-
-.Left-side-About {
-  width: 700px;
-  padding-top: 20px;
-  height: 100%;
-  background-color: rgba(46, 46, 53, 0.7);
-  backdrop-filter: blur(10px);
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.side-top-About {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.side-bot-About {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0px 25px;
-}
-
-.column_about {
-  background-color: rgb(232, 220, 208);
-  width: 375px;
-  height: 4px;
-}
-
-.about-title {
-  font-size: 30px;
-  color: #e8dcd0;
-  font-family: "intro";
-  width: 100%;
-  text-align: center;
-  padding-top: 2%;
-}
-
-.about-text {
-  width: 600px;
-  max-width: 600px;
-  color: #e8dcd0;
-  font-size: 18px;
-  font-family: "Caviar Dreams Bold";
-  line-height: 1.6;
-  margin-top: 2%;
-}
-
-.about-link {
-  font-size: 22px;
-}
-
-@media (max-width: 1540px) {
-  .Left-side-About {
-    width: 650px;
-  }
-
-  .side-bot-About {
-    display: flex;
-    align-items: center;
-    margin-left: 20px;
-  }
-
-  .about-text {
-    width: 550px;
-    font-size: 15px;
-  }
-
-  .About-section {
-    height: 670px;
-  }
-
-  .About-box {
-    height: 670px;
-  }
-}
-
-@media (max-width: 1400px) {
-  .About-section {
-    width: 100vw;
-    height: 700px;
-
-  }
-
-  .About-box {
-    height: 700px;
-  }
-
-  .Left-side-About {
-    width: 570px;
-  }
-
-  .side-bot-About {
-    display: flex;
-    align-items: center;
-  }
-
-  .about-text {
-    width: 520px;
-    font-size: 15px;
-  }
-
-}
-
-@media (max-width: 1280px) {
-
-  .Left-side-About {
+.About_section {
+    position: relative;
     width: 100%;
-  }
-
-  .about-text {
-    width: 650px;
-    font-size: 16px;
-  }
-
-  .side-bot-About {
+    height: 100vh;
+    background-image: url("/images/about/Background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
-    align-items: center;
-  }
-
-  .column_about {
-
-    width: 300px;
-
-  }
+    
 }
 
-@media (max-width: 660px) {
-  .about-title {
-    font-size: 25px;
-  }
+.About_image_box {
+    position: absolute; /* Абсолютное позиционирование относительно родителя */
+    left: 50%; /* Сдвигаем центр в середину */
+    bottom: 0; /* Прикрепляем к нижней части */
+    transform: translateX(-50%); /* Центрируем по горизонтали */
 
-  .side-bot-About {
-    padding: 0px 15px;
-  }
+    display: flex; 
+    flex-direction: column; /* Выравниваем элементы вертикально */
+    align-items: center; /* Центрируем по горизонтали */
+    justify-content: center; /* Центрируем по вертикали */
+    text-align: center; /* Выравниваем текстовые элементы */
+    gap: 5px;
+    
+    width: max-content; /* Подгоняет размер блока под контент */
+    margin-bottom: 5%; /* Добавляем небольшой отступ */
+}
 
-  .about-text {
+
+
+
+.About_scroll_button {
     width: auto;
-    font-size: 14px;
-  }
-
-  .About-section {
-    height: 560px;
-  }
-
-  .About-box {
-    height: 560px;
-  }
+    height: auto;
+    font-family: 'Caviar Dreams Bold', sans-serif;
+    font-size: 40px;
 }
 
-@media (max-width: 642px) {
-  .About-section {
-    height: 640px;
-  }
-
-  .about-link {
-    font-size: 18px;
-  }
-
-  .About-box {
-    height: 640px;
-  }
-}
-
-@media (max-width: 520px) {
-  .About-section {
-    height: 690px;
-  }
-
-  .About-box {
-    height: 690px;
-  }
-}
-
-@media (max-width: 520px) {
-  .About-section {
-    height: 750px;
-  }
-
-  .About-box {
-    height: 750px;
-  }
-}
-
-@media (max-width: 400px) {
-  .column_about {
-
-    width: auto;
-
-  }
-
-  .About-section {
-    height: 640px;
-  }
-
-  .About-box {
-    height: 640px;
-  }
-
-  .about-text {
-    width: auto;
-    font-size: 12px;
-  }
-
-}
-
-@media (max-width: 366px) {
-  .About-section {
-    height: 670px;
-  }
-
-  .About-box {
-    height: 670px;
-  }
-}
-
-@media (max-width: 348px) {
-  .About-section {
-    height: 700px;
-  }
-
-  .About-box {
-    height: 700px;
-  }
+.About_scroll_image {
+    user-select: none; 
+    cursor: pointer; 
 }
