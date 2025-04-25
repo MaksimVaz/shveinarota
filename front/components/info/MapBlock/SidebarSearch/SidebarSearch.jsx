@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect} from 'react';
 import Image from 'next/image';
 import { useLang } from '$component/Context/LangContext';
 import './SidebarSearch.css';
@@ -10,6 +10,15 @@ const SidebarSearch = ({ markers, handleZoom, disableMapInteraction, enableMapIn
 	const { lang } = useLang();
 	const [isOpen, setIsOpen] = useState(true);
 	const [isSidebarBeingDragged, setIsSidebarBeingDragged] = useState(false);
+
+	useEffect(() => {
+		if (isOpen) {
+			document.querySelector('.sidebar-wrapper')?.classList.add('touch-block');
+		} else {
+			document.querySelector('.sidebar-wrapper')?.classList.remove('touch-block');
+		}
+	}, [isOpen]);
+
 
 	const filteredMarkers = markers.filter(marker =>
 		marker.title.toLowerCase().includes(query.toLowerCase())

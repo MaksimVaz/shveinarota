@@ -81,7 +81,10 @@ const MapBlock = () => {
 								key={marker.id}
 								position={[marker.lat, marker.lng]}
 								eventHandlers={{
-									click: () => setSelectedPoint({ lat: marker.lat, lng: marker.lng })
+									click: (e) => {
+										e.target.openPopup(); // відкриває попап
+										setSelectedPoint({ lat: marker.lat, lng: marker.lng });
+									}
 								}}
 								icon={customIcon}
 							>

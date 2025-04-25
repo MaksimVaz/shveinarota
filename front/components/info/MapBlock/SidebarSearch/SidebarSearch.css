@@ -12,6 +12,10 @@
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
+.sidebar-wrapper.touch-block {
+	touch-action: none;
+}
+
 /* Сам сайдбар */
 .sidebar {
     background-color: rgb(34, 34, 34);
@@ -103,6 +107,7 @@
     scrollbar-color: #999 #1e1e1e;
     scroll-behavior: smooth;
     cursor: grab;
+    touch-action: pan-y;    
 }
 .sidebar__list:active {
     cursor: grabbing;
@@ -163,4 +168,52 @@
 }
 .sidebar-deadzone:active {
     cursor: grabbing;
+}
+
+/* 📱 Адаптація для мобільних */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+        padding: 10px;
+    }
+
+    .sidebar.closed {
+        transform: translateX(-100%);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .sidebar__toggle {
+        width: 48px;
+        height: 55px;
+        font-size: 28px;
+        transform: translateY(-50%) rotate(0deg);
+    }
+
+    .sidebar__toggle.moved {
+        /* Прижать к краю + повернуть вправо и немного растянуть */
+        
+        left: 150px;
+    }
+
+    .sidebar__title {
+        font-size: 20px;
+    }
+
+    .sidebar__input {
+        font-size: 13px;
+    }
+
+    .sidebar__item {
+        padding: 10px;
+    }
+
+    .sidebar__text {
+        font-size: 13px;
+    }
+
+    .sidebar__image {
+        width: 42px;
+        height: 42px;
+    }
 }
