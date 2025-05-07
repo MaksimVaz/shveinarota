@@ -16,7 +16,7 @@ const Footer = () => {
 
 	const scrollbarWidth = useScrollbarWidth();
 
-	// Открытие окна
+	// Функція для стабілазіцї попапа
 	function openPopup() {
 		document.body.classList.add("popup-active");
 		document.querySelector(".wrapper").style.paddingRight = scrollbarWidth + "px";

@@ -4,7 +4,7 @@
 	top: 0;
 	left: 0;
 	background: #fff6e5;
-	height: 75px;
+	height: 100px;
 	width: 100%;
 }
 
@@ -45,9 +45,7 @@
 	max-width: 100% !important;
 }
 
-.logo_shveya {
-	max-width: 196px;
-}
+
 
 .right .menu {
 	display: flex;
@@ -152,6 +150,7 @@
 	display: block;
 	width: 40px;
 	height: 4px;
+
 }
 
 .icon-menu::after, .icon-menu::before {
@@ -187,6 +186,10 @@
 
 }
 
+.Menu_header_wrapper{
+	padding-right: 20px;
+}
+
 .extra-button {
 	display: none; /* По умолчанию скрыта */
 	width: 40px;
@@ -198,6 +201,10 @@
 	border: none;
 	cursor: pointer;
 	padding: 0;
+}
+
+.logo_main_img {
+	margin-left: 20px;
 }
 
 @media (max-width: 1050px) {
@@ -213,7 +220,13 @@
 	.right .menu {
 		gap: 24px;
 	}
+	.logo_main_img {
+		width: 65px;
+	}
+	
 }
+
+
 
 
 

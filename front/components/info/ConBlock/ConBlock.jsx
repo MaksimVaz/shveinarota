@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import "./ConBlock.css";
 import Link from "next/link";
 import { useScrollbarWidth } from "$hooks/useScrollbarWidth";
-import PopupLink from "./PopupLink/PopupLink";
+import PopupLink from "../DonatePage/DonatePage";
 import { useLang } from "$component/Context/LangContext";
 
 const ConBlock = () => {

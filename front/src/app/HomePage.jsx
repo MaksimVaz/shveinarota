@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion"
-import '$style/infoPage/Popup.css'
 import InfoBlock from '$component/info/InfoBlock/InfoBlock';
 import CardBlock from '$component/info/CardBlock/CardBlock';
 import ConBlock from '$component/info/ConBlock/ConBlock';

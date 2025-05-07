@@ -23,13 +23,13 @@
   color: #232324;
   display: flex;
   width: auto;
-  padding: 10 10 10 30;
+  padding: 10px 10px 10px 30px;
   margin-bottom: 20px;
   border-bottom: 3px solid #232324;
 }
 
 .details p {
-  padding: 10 0 0 20;
+  padding: 10px 0 0 20px;
   font-size: 18px;
   color: #333;
   line-height: 1.5;

@@ -6,11 +6,10 @@
 	box-shadow: 0px 0px clamp(10px, 2vw, 20px) clamp(4px, 1vw, 8px) rgba(0, 0, 0, 0.562);
 	text-align: center;
 
-	padding: 40 0 70 0;
+	padding: 40px 0 70px 0;
 }
 
-.partners__wrapper {
-}
+
 
 .partners__container {
 	max-width: 1200px;
@@ -22,20 +21,24 @@
 
 .partners__title {
 	color: #232324;
-	font-size: 30px;
+	font-size: 40px;
 	display: inline-block;
 	font-family: 'Caviar Dreams Bold', sans-serif;
 	position: relative;
 }
 
+.wrapper_partner_line {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
 .partners__line {
 	width: calc(100% + clamp(10px, 2vw, 30px));
-	max-width: 300px;
+	max-width: 500px;
 	height: clamp(2px, 0.5vw, 4px);
 	background-color: #232324;
-	margin: clamp(2px, 1vw, 5px) auto clamp(5px, 2vw, 15px);
+
 	border-radius: 1px;
-	position: relative;
 }
 
 .partners__row {
@@ -76,6 +79,7 @@
 
 .partners__slider .slick-list {
 	height: clamp(150px, 12vw, 200px);
+
 }
 
 .slick-dots {
@@ -87,9 +91,12 @@
 	align-items: center;
 	gap: clamp(4px, 1vw, 6px);
 	width: auto;
+	top: 175px;
+
 }
 
 .slick-dots li {
+	
 	width: clamp(5px, 1vw, 10px);
 	height: clamp(5px, 1vw, 10px);
 	background-color: #232324;
@@ -100,6 +107,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	box-shadow: 4px -1.250px 0px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -128,6 +136,7 @@
 	.partners__slider .slick-list {
 		height: clamp(150px, 10vw, 200px); /* Уменьшена высота слайдера */
 	}
+
 }
 
 @media (max-width: 768px) {
@@ -136,10 +145,24 @@
 		gap: 8px; /* Уменьшил расстояние между картинками */
 	}
 
+
 	.partners__slider .slick-list {
 		height: clamp(140px, 9vw, 180px); /* Уменьшена высота слайдера */
 	}
 }
+
+
+@media (max-width: 720px) {
+	.partners__title {
+		font-size: 28px;
+	}
+
+	.partners__line {
+		max-width: 300px;
+	}
+	
+}
+
 
 @media (max-width: 480px) {
 	.partners__row {

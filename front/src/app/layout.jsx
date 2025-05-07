@@ -7,7 +7,6 @@ import Footer from '$component/Footer';
 import { LangProvider } from '$component/Context/LangContext';
 import { useEffect, useRef } from 'react';
 import PopupLink from '$component/en/ConBlockEn/PopupLink/PopupLink';
-import "$style/infoPage/Popup.css"
 
 export default function RootLayout({ children }) {
   const path = usePathname();

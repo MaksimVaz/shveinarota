@@ -1,0 +1,10 @@
+.media_prev_slider_button{
+    width: 50%;
+    height: 50%;
+    transform: rotate(180deg);
+}
+
+.media_next_slider_button{
+    width: 50%;
+    height: 50%;
+}

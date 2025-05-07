@@ -1,152 +1,215 @@
-import { SwiperSlide, Swiper } from "swiper/react";
-import { Autoplay, Pagination, EffectCoverflow, Navigation } from "swiper/modules";
-import Link from "next/link";
-import Image from "next/image";
+import { Autoplay, Pagination, EffectCoverflow } from "swiper/modules";
+import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
-import "./MediaBlock.css";
-import { useLang } from "$component/Context/LangContext";
-import { useEffect, useState } from "react";
-import { getData } from "api";
+import 'swiper/css';
+import './MediaBlock.css';
+import './MediaTextSlider.css';
+import './MediaNumberSlider.css';
+import './MediaImageSlider.css';
+import './MediaSliderControll.css';
+import './MediaBlockAdapt.css'
+
+import { useLang } from '$component/Context/LangContext';
+import { getData } from 'api';
+
+// Debounce hook for resize events
+function useDebouncedResize(breakpoint = 992, delay = 200) {
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth <= breakpoint : false
+  );
+  useEffect(() => {
+    let timeout;
+    const onResize = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        const mobile = window.innerWidth <= breakpoint;
+        setIsMobile(prev => (prev !== mobile ? mobile : prev));
+      }, delay);
+    };
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('resize', onResize);
+      clearTimeout(timeout);
+    };
+  }, [breakpoint, delay]);
+  return isMobile;
+}
 
 const MediaBlock = () => {
+  const { lang } = useLang();
+  const isMobileView = useDebouncedResize(770);
+  const [media, setMedia] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isSyncing, setIsSyncing] = useState(false);
 
-	const { lang } = useLang();
-	const [isMobileView, setIsMobileView] = useState(false);
-	const [media, setMedia] = useState([]);
+  // fetch media once
+  useEffect(() => {
+    getData('plots/all', data => {
+      if (Array.isArray(data)) setMedia(data);
+    });
+  }, []);
 
-	const getYoutubeThumbnail = (url) => {
-		const regex = /(?:youtu\.be\/|youtube\.com\/(?:.*v=|embed\/|v\/|.+&v=))([^&?/]+)/;
-		const match = url.match(regex);
-		return match ? `https://img.youtube.com/vi/${match[1]}/maxresdefault.jpg` : null;
-	};
+  // derive slides, numbers, images only when `media` changes
+  const mediaUrl = media.map(item => item.url || '');
+  const slides = useMemo(() => media.map(item => item.title || ''), [media]);
+  const numbers = useMemo(
+    () => slides.map((_, idx) => String(idx + 1).padStart(2, '0')),
+    [slides]
+  );
+  const images = useMemo(
+    () =>
+      media.map(item => {
+        const url = item.url || '';
+        const videoId = url.includes('v=')
+          ? url.split('v=')[1].split('&')[0]
+          : url.split('/').pop()?.split('?')[0] || '';
+        return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+      }),
+    [media]
+  );
 
-	useEffect(() => {
-		getData("plots/all", setMedia);
-	}, []);
+  
+  // refs for Swiper instances
+  const swiperRefs = useRef({ text: null, numbers: null, images: null });
 
-	useEffect(() => {
-		if (window != undefined) {
-			const checkViewport = () => {
-				const isMobile = window.innerWidth <= 992;
-				setIsMobileView((prev) => prev !== isMobile ? isMobile : prev);
-			};
+  const syncAll = useCallback((index, speed = 500) => {
+    setIsSyncing(true);
+    Object.values(swiperRefs.current).forEach(swiper => {
+      if (swiper && swiper.realIndex !== index) {
+        swiper.slideToLoop(index, speed);
+      }
+    });
+    setTimeout(() => setIsSyncing(false), speed + 50);
+  }, []);
 
-			window.addEventListener("resize", checkViewport);
-			checkViewport();
+  const changeSlide = useCallback(
+    idx => {
+      if (!slides.length || idx === activeIndex || isSyncing) return;
+      setActiveIndex(idx);
+      syncAll(idx);
+    },
+    [slides.length, activeIndex, syncAll, isSyncing]
+  );
 
-			return () => window.removeEventListener("resize", checkViewport);
-		}
-	}, []);
+  const goPrev = useCallback(() => {
+    if (!slides.length || isSyncing) return;
+    const idx = (activeIndex - 1 + slides.length) % slides.length;
+    changeSlide(idx);
+  }, [activeIndex, slides.length, changeSlide, isSyncing]);
 
-	return (
-		<div className="main__media media">
-			<div className="media-background">
-				<Swiper
-					modules={[Pagination, Navigation]}
-					navigation={{
-						nextEl: ".swiper-button-next",
-						prevEl: ".swiper-button-prev",
-					}}
-					loop={true}
-					allowTouchMove={false}
-					pagination={{
-						el: ".media-pagination",
-						type: "bullets",
-						clickable: true,
-						bulletClass: "swiper-bullet",
-						bulletActiveClass: "bullet-active",
-					}}
-				>
-					{media.map((item, index) => (
-						<SwiperSlide key={index} className="media-background__slide">
-							<div className="media__background story__background">
-								<Image src={getYoutubeThumbnail(item.url)} alt="media image" width={1920} height={1080} className="media-img" />
-							</div>
-						</SwiperSlide>
-					))}
-				</Swiper>
-			</div>
-			<div className="media__container">
-				<div className="media__title _main-title">{lang == "ua" ? "Медіа про нас" : "Media about us"}</div>
-				<Swiper
-					key={isMobileView ? "mobile" : "desktop"}
-					modules={[Pagination, Navigation, EffectCoverflow]}
-					navigation={{
-						nextEl: ".swiper-button-next",
-						prevEl: ".swiper-button-prev",
-					}}
-					effect="coverflow"
-					centeredSlides={true}
-					loop={true}
-					pagination={{
-						el: ".media-pagination",
-						type: "bullets",
-						clickable: true,
-						bulletClass: "swiper-bullet",
-						bulletActiveClass: "bullet-active",
-					}}
-					breakpoints={{
-						992: {
-							effect: "coverflow",
-							slidesPerView: 2,
-							coverflowEffect: {
-								rotate: 2,
-								stretch: 0,
-								depth: 250,
-								modifier: 1,
-								slideShadows: true,
-							}
-						},
-						0: {
-							effect: "slide",
-							slidesPerView: 1,
-							centeredSlides: false,
-							spaceBetween: 10
-						},
-					}}
-				>
-					{media.map((item, index) => (
-						<SwiperSlide key={index} className="media__slide">
-							<Link href={item.url} target="_blank" className="media__story story">
-								<div className="story__background">
-									<Image src={getYoutubeThumbnail(item.url)} alt="media image" width={1920} height={1080} className="story-img" />
-								</div>
-								<div className="story__body">
-									<div className="story__title">{item.title}</div>
-									<div className="story__logo">
-										<Image src={'http://drive.google.com/uc?export=view&id=' + item.path} alt="logo" width={48} height={48} className="story-logo _round" />
-										{item.title_en}
-									</div>
-								</div>
-							</Link>
-						</SwiperSlide>
-					))}
-				</Swiper>
-				{/* Кнопки слайдера */}
-				<div className="swiper-buttons__container">
-					<div className="swiper-button-prev">
-						<div className="next-img">
-							<Image
-								src="/images/swiper/arrow-back.png"
-								height={40}
-								width={29}
-								alt="icon-prev"
-							/>
-						</div>
-					</div>
-					<div className="swiper-button-next">
-						<Image
-							src="/images/swiper/arrow-forward.png"
-							height={40}
-							width={29}
-							alt="icon-next"
-						/>
-					</div>
-				</div>
-				<div className="swiper-pagination media-pagination"></div>
-			</div>
-		</div>
-	);
+  const goNext = useCallback(() => {
+    if (!slides.length || isSyncing) return;
+    const idx = (activeIndex + 1) % slides.length;
+    changeSlide(idx);
+  }, [activeIndex, slides.length, changeSlide, isSyncing]);
+
+  if (!slides.length) {
+    return <div>Завантаження...</div>;
+  }
+
+  return (
+    <div className="main_media_wrapper">
+      <div className="media_container">
+        <div className="media_title_block">
+          <h2>Медіа про нас</h2>
+          <div className="media_title_column" />
+        </div>
+
+        <div id="media-slider-group" className="media_slider_block">
+          <div className="left_slide_mediablock">
+            <Swiper
+              className="media-block-swiper text-swiper"
+              modules={[Autoplay, Pagination, EffectCoverflow]}
+              slidesPerView={1}
+              spaceBetween={30}
+              loop
+              onSwiper={sw => (swiperRefs.current.text = sw)}
+              onSlideChange={swiper => changeSlide(swiper.realIndex)}
+            >
+              {slides.map((text, idx) => (
+                <SwiperSlide key={idx}>
+                  <div className="text-center text-xl font-semibold p-8">{text}</div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
+          <div className="right_slide_mediablock">
+            <div className="top_slide_block">
+              <button onClick={goNext} className="nav-btn" disabled={isSyncing}>
+                <img
+                  src="/images/pointer.png"
+                  alt="Следующая"
+                  className="media_prev_slider_button"
+                />
+              </button>
+              <Swiper
+                className="number-swiper"
+                slidesPerView={3}
+                spaceBetween={0}
+                speed={600}
+                loop
+                centeredSlides
+                onSwiper={sw => (swiperRefs.current.numbers = sw)}
+                onSlideChange={swiper => changeSlide(swiper.realIndex)}
+              >
+                {numbers.map((num, idx) => (
+                  <SwiperSlide key={idx}>
+                    <div
+                      className={`number-slide cursor-pointer ${activeIndex === idx ? 'active' : ''}`}
+                      onClick={() => changeSlide(idx)}
+                    >
+                      {num}
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <button onClick={goNext} className="nav-btn" disabled={isSyncing}>
+                <img
+                  src="/images/pointer.png"
+                  alt="Следующая"
+                  className="media_next_slider_button"
+                />
+              </button>
+            </div>
+
+            <div className="bottom_slide_block">
+            <Swiper
+              className="media-block-swiper image-swiper"
+              modules={[Pagination]}
+              slidesPerView={isMobileView ? 1 : 2}
+              spaceBetween={20}
+              loop
+              onSwiper={sw => (swiperRefs.current.images = sw)}
+              onSlideChange={swiper => changeSlide(swiper.realIndex)}
+            >
+              {images.map((src, idx) => (
+                <SwiperSlide key={idx}>
+                  <img
+                    src={src}
+                    alt="media"
+                    loading="lazy"
+                    className="w-full h-auto object-cover rounded-lg cursor-pointer"
+                    onClick={() => {
+                      if (idx === activeIndex) {
+                        const url = mediaUrl[idx];
+                        if (url) window.open(url, '_blank');
+                      } else {
+                        changeSlide(idx);
+                      }
+                    }}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default MediaBlock;

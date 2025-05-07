@@ -96,7 +96,7 @@
 
 @media (max-width: 768px) {
 	.infobox__container1 h1 {
-		font-size: 26px;
+		font-size: 36px;
 	}
 
 	.infobox__container1 {
@@ -116,7 +116,7 @@
 	}
 
 	.right h1 {
-		font-size: 26px;
+		font-size: 46px;
 	}
 
 	.right .infobox__text {
@@ -128,7 +128,7 @@
 
 @media (max-width: 768px) {
 	.right h1 {
-		font-size: 22px;
+		font-size: 35px;
 	}
 
 	.infobox__slide {
@@ -186,7 +186,7 @@
 	margin: 0 auto;
 	background-color: #232324;
 	color: #fff6e5;
-	padding: 20 30 20 30;
+	padding: 20px 30px 20px 30px;
 	border-radius: 5px;
 	transition: all 0.3s ease 0s;
 	box-shadow: 12.944px 9.405px 0px 0px rgba(0, 0, 0, 0.34);

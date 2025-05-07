@@ -23,14 +23,18 @@
 	height: none;
 	background-color: none;
   }
+
+.footer--guides .column-footer__link {
+	color: #2e2e35;
+	width: auto;
+}
   
 .footer--guides .footer__container {
 	position: relative;
     border: 3px solid #2e2e35;
-    max-width: 1170px;
     gap: 30px;
     box-shadow: 8.776px 8.184px 0px 0px rgba(0, 0, 0, 0.3);
-    margin: 0 14 0 14;
+    margin: 0 14px 0 14px;
 }
 
 .footer--guides .footer__columns {
@@ -61,15 +65,25 @@
     border-radius: 5px;
     font-family: 'intro', sans-serif; 
     box-shadow: 6.314px 5.82px 0px 0px rgba(0, 0, 0, 0.67);
+    margin-right: 20px;
 
 }
 
 .footer--guides .column-footer__row::before {
 
 	background-color: #ffe8d3;
+	max-width: 320px;
 
 
 }
+
+.footer--guides .footer__container{
+    width: 100%;
+    max-width: 1170px;
+    padding-left: 40px;
+    padding-top: 50px;
+}
+
 
 .footer--guides .footer__icons{
     filter: brightness(0%) saturate(100%);
@@ -91,6 +105,88 @@
 
 }
 
+.footer--about ._background { 
+	position: none;
+	top: none;
+	left: none;
+	background: none;
+	background-size: none;
+	margin: none;
+	width: none;
+	height: none;
+    background-color: #232324;
+    background-size: none;
+}
+
+.footer--about ._background::before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: none;
+	left: none;
+	width: none;
+	height: none;
+	background-color: none;
+}
+
+.footer--about .column-footer__link {
+	color: #ffe8d3;
+}
+  
+.footer--about .footer__container {
+	position: relative;
+    max-width: 1170px;
+    gap: 30px;
+    margin: 0 14px 0 14px;
+}
+
+.footer--about .footer__columns {
+	justify-content: left;
+	gap: 40px;
+}
+
+.footer--about .footer__wrapper {
+    padding-bottom: 40px;
+}
+
+.footer--about .footer__title {
+	color: #ffe8d3;
+}
+
+.footer--about .column-footer__row {
+	color: #ffe8d3;
+	max-width: 320px;
+}
+
+.footer--about .column-footer__title {
+	background-color: #ffe8d3;
+	color: #232324;
+    border-color: #ffe8d3;
+    border-radius: 2px;
+    font-family: 'intro', sans-serif; 
+    box-shadow: 6.314px 5.82px 0px 0px rgba(0, 0, 0, 0.67);
+}
+
+.footer--about .footer__container {
+    width: 100%;
+    max-width: 1180px;
+}
+
+.footer--about .footer_title_logo {
+    width: 280px;
+    height: 280px;
+}
+.footer--about .column-footer__row::before {
+
+	background-color: #ffe8d3;
+
+
+}
+
+.footer--about .footer__columns {
+    margin-left: 60px;
+}
+
 
 
 
@@ -103,4 +199,9 @@
         height: 180px;
     }
     
+}
+
+
+@media (max-width: 520px) {
+   
 }

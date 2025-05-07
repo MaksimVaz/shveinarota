@@ -1,0 +1,32 @@
+.media-block-swiper.text-swiper {
+	width: 100%;
+	max-width: 450px;
+	height: auto;
+}
+
+.media-block-swiper.text-swiper .swiper-slide {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 34px;
+	font-weight: bold;
+	border-radius: 12px;
+	padding: 20px;
+	text-align: center;
+	color: #fff6e5;
+	font-family: 'Caviar Dreams Bold', sans-serif;
+}
+
+
+.media-block-swiper.text-swiper .swiper-pagination {
+	bottom: 10px !important;
+}
+
+.media-block-swiper.text-swiper .swiper-pagination-bullet {
+	background: #999;
+	opacity: 1;
+}
+
+.media-block-swiper.text-swiper .swiper-pagination-bullet-active {
+	background: #000;
+}

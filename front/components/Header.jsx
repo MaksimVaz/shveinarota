@@ -70,20 +70,22 @@ const Header = () => {
 					<Link className="header__link" onClick={closeMenu} href="/">
 						<div className="logo_shveya">
 							<Image
-								src="/images/logo.png"
+								src="/images/logo-rota.png"
 								alt="Logo"
-								width={200}
+								width={90}
 								height={60}
-								className="logo-img"
+								className="logo_main_img"
 								priority
 							/>
 						</div>
 					</Link>
 				</div>
-
+				<div className="Menu_header_wrapper">
 				<button ref={menuIcon} onClick={openMenu} className="icon-menu">
 					<span></span>
 				</button>
+				</div>
+				
 
 				<div className="right _menu">
 					<nav className="menu">
