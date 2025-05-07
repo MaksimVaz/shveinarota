@@ -1,0 +1,66 @@
+/* Кнопка відкриття / закриття */
+.sidebar__toggle {
+    width: 56px;
+    height: 60px;
+    background-color: #232324; 
+    color: #fff6e5;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 1.94px 2.078px 0px 0px rgba(0, 0, 0, 0.37);
+    border-radius: 5px;
+    transition: transform 0.3s ease, left 0.5s ease, background-color 0.3s ease;
+    position: absolute;
+    left: -60px;  /* Начальное положение кнопки */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Переміщення кнопки, коли панель схована */
+.sidebar__toggle.moved {
+    left: 240px; /* Кнопка прижимается к краю карты */
+}
+
+.sidebar__toggle:active {
+    cursor: grabbing; /* Появляется рука при зажатии кнопки */
+  }
+
+/* Иконка кнопки */
+.sidebar_toggleicon {
+    width: 36%;
+    height: 36%;
+    background-image: url("/images/pointer.png"); /* Проверьте, что путь корректный */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.3s ease;
+}
+
+/* Поворот иконки при открытии/закрытии */
+.sidebar_toggleicon.rotated {
+    transform: rotate(180deg);
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar__toggle {
+        width: 48px;
+        height: 55px;
+        font-size: 28px;
+        transform: translateY(-50%) rotate(0deg);
+        transition: transform 0.3s ease, left 0.3s ease, background-color 0.3s ease; /* Плавный переход на мобильных */
+    }
+
+    .sidebar__toggle.moved {
+        /* Прижать к краю + повернуть вправо и немного растянуть */
+        left: 165px;
+    }
+}
+
+/* Эффект при наведении */
+@media (hover: hover) {
+    .sidebar__toggle:hover {
+      background-color: #46464d;
+    }
+}
