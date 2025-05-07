@@ -1,36 +1,84 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useLang } from '$component/Context/LangContext';
 import './SidebarSearch.css';
 import './SidebarButton.css';
 
-const SidebarSearch = ({ markers, handleZoom, disableMapInteraction, enableMapInteraction }) => {
-  const [query, setQuery] = useState('');
+const SidebarSearch = ({ markers, handleZoom }) => {
   const { lang } = useLang();
+  const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(true);
 
-  const sidebarRef = useRef(null);
   const sidebarListRef = useRef(null);
-
-  const isDragging = useRef(false);
-  const startY = useRef(0);
-  const scrollTop = useRef(0);
-  const velocity = useRef(0);
-  const animationFrame = useRef(null);
-  const lastY = useRef(0);
-
   const filteredMarkers = markers.filter(marker =>
     marker.title.toLowerCase().includes(query.toLowerCase())
   );
 
+  // ✅ Drag-scroll без дерганий (мышь и touch)
+  useEffect(() => {
+    const el = sidebarListRef.current;
+    if (!el) return;
+  
+    let isDown = false;
+    let startY;
+    let scrollTop;
+  
+    const onPointerDown = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      isDown = true;
+      startY = e.pageY || e.touches?.[0]?.pageY;
+      scrollTop = el.scrollTop;
+      el.style.cursor = 'grabbing';
+    };
+  
+    const onPointerMove = (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const y = e.pageY || e.touches?.[0]?.pageY;
+      const walk = (y - startY);
+      el.scrollTop = scrollTop - walk;
+    };
+  
+    const end = () => {
+      isDown = false;
+      el.style.cursor = 'grab';
+    };
+  
+    el.addEventListener('pointerdown', onPointerDown);
+    el.addEventListener('pointermove', onPointerMove);
+    el.addEventListener('pointerup', end);
+    el.addEventListener('pointerleave', end);
+    el.addEventListener('pointercancel', end);
+    el.addEventListener('touchend', end);
+  
+    // 💡 Отключаем прокрутку карты при свайпе по списку
+    el.addEventListener('touchmove', (e) => {
+      if (isDown) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, { passive: false });
+  
+    return () => {
+      el.removeEventListener('pointerdown', onPointerDown);
+      el.removeEventListener('pointermove', onPointerMove);
+      el.removeEventListener('pointerup', end);
+      el.removeEventListener('pointerleave', end);
+      el.removeEventListener('pointercancel', end);
+      el.removeEventListener('touchend', end);
+      el.removeEventListener('touchmove', () => {});
+    };
+  }, []);
+  
+
+  // ✅ Wheel-скролл мышью с отключением карты
   useEffect(() => {
     const sidebarList = sidebarListRef.current;
     if (!sidebarList) return;
-
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    if (isTouchDevice) return;
 
     const handleWheel = (e) => {
       e.preventDefault();
@@ -47,90 +95,16 @@ const SidebarSearch = ({ markers, handleZoom, disableMapInteraction, enableMapIn
     };
   }, []);
 
-  useEffect(() => {
-    const wrapper = document.querySelector('.sidebar-wrapper');
-    if (!wrapper) return;
-    wrapper.classList.toggle('touch-block', isOpen);
-  }, [isOpen]);
-
-  const handleDragStart = (e) => {
-    const isTouch = e.type.includes('touch');
-    if (!isTouch && e.button !== 0) return;
-
-    isDragging.current = true;
-    startY.current = isTouch ? e.touches[0].clientY : e.clientY;
-    scrollTop.current = sidebarListRef.current.scrollTop;
-    velocity.current = 0;
-    lastY.current = startY.current;
-
-    sidebarListRef.current.style.cursor = 'grabbing';
-    cancelAnimationFrame(animationFrame.current);
-
-    disableMapInteraction?.();
-  };
-
-  const handleDragMove = (e) => {
-    if (!isDragging.current) return;
-  
-    const isTouch = e.type.includes('touch');
-    const currentY = isTouch ? e.touches[0].clientY : e.clientY;
-    const deltaY = currentY - lastY.current;
-  
-    const speedMultiplier = 3; // ощущение кручения как колесо
-    sidebarListRef.current.scrollTop -= deltaY * speedMultiplier;
-  
-    velocity.current = deltaY * speedMultiplier;
-    lastY.current = currentY;
-    e.preventDefault();
-  };
-  
-  
-
-  const handleDragEnd = () => {
-    if (!isDragging.current) return;
-
-    isDragging.current = false;
-    sidebarListRef.current.style.cursor = 'grab';
-
-    if (Math.abs(velocity.current) > 0.5) {
-      animationFrame.current = requestAnimationFrame(animateInertia);
-    }
-
-    enableMapInteraction?.();
-  };
-
-  const animateInertia = () => {
-  if (Math.abs(velocity.current) < 0.3) return;
-
-  sidebarListRef.current.scrollTop -= velocity.current;
-  velocity.current *= 0.95; // меньшее уменьшение — дольше крутится
-
-  animationFrame.current = requestAnimationFrame(animateInertia);
-};
-
-
-  useEffect(() => {
-    const onMouseMove = (e) => isDragging.current && handleDragMove(e);
-    const onMouseUp = () => isDragging.current && handleDragEnd();
-
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
-    return () => {
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
-    };
-  }, []);
-
   return (
     <div className="sidebar-wrapper">
       <button
         className={`sidebar__toggle ${!isOpen ? 'moved' : ''}`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className={`sidebar_toggleicon ${isOpen ? 'rotated' : ''}`}></div>
+        <div className={`sidebar_toggleicon ${isOpen ? 'rotated' : ''}`} />
       </button>
 
-      <div className={`sidebar ${!isOpen ? 'closed' : ''}`} ref={sidebarRef}>
+      <div className={`sidebar ${!isOpen ? 'closed' : ''}`}>
         <h3 className="sidebar__title">
           {lang === 'ua' ? 'Відділення' : 'Subdivisions'}
         </h3>
@@ -138,27 +112,22 @@ const SidebarSearch = ({ markers, handleZoom, disableMapInteraction, enableMapIn
           type="text"
           className="sidebar__input"
           value={query}
-          onChange={e => setQuery(e.target.value)}
+          onChange={(e) => setQuery(e.target.value)}
           placeholder={lang === 'ua' ? 'Знайти відділ' : 'Find subdivision'}
-          aria-label="Search subdivisions"
         />
-        <div className="sidebar__line"></div>
+        <div className="sidebar__line" />
         <ul
-          className="sidebar__list"
           ref={sidebarListRef}
-          onMouseDown={handleDragStart}
-          onMouseMove={handleDragMove}
-          onMouseUp={handleDragEnd}
-          onTouchStart={handleDragStart}
-          onTouchMove={handleDragMove}
-          onTouchEnd={handleDragEnd}
+          className="sidebar__list"
           style={{
-            touchAction: 'auto',
+            cursor: 'grab',
+            userSelect: 'none',
             WebkitOverflowScrolling: 'touch',
-            cursor: isDragging.current ? 'grabbing' : 'grab'
+            overflowY: 'auto',
+            scrollBehavior: 'smooth',
           }}
         >
-          {filteredMarkers.map(marker => (
+          {filteredMarkers.map((marker) => (
             <li
               key={marker.id}
               className="sidebar__item"
@@ -179,7 +148,7 @@ const SidebarSearch = ({ markers, handleZoom, disableMapInteraction, enableMapIn
             </li>
           ))}
         </ul>
-        <div className="sidebar__line"></div>
+        <div className="sidebar__line" />
       </div>
     </div>
   );

@@ -79,15 +79,21 @@
     scrollbar-width: thin;
     scrollbar-color: #999 #1e1e1e;
     cursor: grab;
-    touch-action: pan-y;   
+    touch-action: none;   
     position: relative;
     scroll-behavior: smooth;
     user-select: none;
-    overflow-y: auto;
+    overflow-y: auto;   
     overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch; 
+    -webkit-overflow-scrolling: touch;
+    transition: transform 0.1s ease-out;
+    will-change: transform;
     
 }
+
+.sidebar__list.scrolling {
+    transform: rotateX(2deg); /* или rotateZ(1deg) для горизонтального эффекта */
+  }
 
 .sidebar__list:active {
     cursor: grabbing;
