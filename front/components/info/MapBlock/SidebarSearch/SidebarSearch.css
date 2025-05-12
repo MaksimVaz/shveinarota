@@ -125,7 +125,7 @@
     transition: background 0.2s ease;
     padding: 12px 14px;
     border-radius: 8px;
-    min-height: 75px;
+    min-height: 64px; 
 }
 
 .sidebar__item:hover {
@@ -135,10 +135,21 @@
 .sidebar__image {
     border-radius: 50%;
     object-fit: cover;
-    margin-right: 12px;
-    width: 48px;
-    height: 48px;
 }
+
+.sidebar__icon-wrapper {
+  width: 54px;
+  height: 54px;
+  position: relative;
+  margin-right: 12px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: transparent; /* вместо белого */
+}
+
+
+
 
 .sidebar__text {
     font-size: 15px;
@@ -175,10 +186,10 @@
     }
 
     .sidebar.closed {
-        transform: translateX(-100%);  /* Слайд влево при закрытии на мобильных */
+        transform: translateX(100%);  /* Слайд влево при закрытии на мобильных */
         opacity: 0;
         pointer-events: none;
-        transition: transform 0.5s ease-out, opacity 0.5s ease-out; /* Плавное закрытие на мобильных */
+        
     }
 
     .sidebar__title {

@@ -1,5 +1,141 @@
-.Donate_Page_wrapper{
-	width: 100%;
-	height: 100%;
-	background-color: rgb(47, 47, 54, 0.5);
+.donate-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.6);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 999;
 }
+
+.donate-modal {
+	border-width: 2px;
+	border-color: rgb(0, 0, 0);
+	border-style: solid;
+	background-color: rgb(255, 246, 229);
+	position: absolute;
+	display: flex;
+	background-color: #fff8ed;
+	border-radius: 1px;
+	overflow: hidden;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+	max-width: 900px;
+	height: 448px;
+	width: 100%;
+	opacity: 0;
+	transform: scale(0.95);
+	transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.donate-modal.show {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.donate-overlay {
+	opacity: 0;
+	transition: opacity 0.4s ease;
+}
+
+.donate-overlay.show {
+	opacity: 1;
+}
+
+.donate-left {
+	background-color: rgb(30, 30, 31);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 50%;
+	padding: 20px;
+}
+
+.donate-left img {
+	width: 90%;
+	height: auto;
+	max-width: none;
+	object-fit: contain;
+}
+
+
+.donate-right {
+	width: 50%;
+	padding: 20px;
+	text-align: center;
+	background-color: rgb(255, 246, 229);
+}
+
+.donate-right h2 {
+	color: #232324;
+	font-size: 40px;
+	display: inline-block;
+	font-family: 'Caviar Dreams Bold', sans-serif;
+	position: relative;
+}
+
+.wrapper_donate_line {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+.donate__line {
+	width: calc(100% + clamp(10px, 2vw, 30px));
+	max-width: 500px;
+	height: clamp(2px, 0.5vw, 4px);
+	background-color: #232324;
+
+	border-radius: 1px;
+}
+
+.donate-icons {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 15px;
+	margin-top: 20px;
+	justify-items: center;
+}
+
+.donate-icons img {
+	/* УДАЛИ ЭТО полностью или закомментируй */
+	/* width: 70px;
+	height: 70px;
+	object-fit: contain;
+	border: 2px solid black;
+	border-radius: 12px;
+	box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+	background-color: white;
+	padding: 10px; */
+}
+
+.donate-item {
+	width: 120px;
+	height: 120px;
+	background-color: white;
+	border-radius: 12px;
+	box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.35);
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 3px solid black;
+	transition: transform 0.3s ease;
+	cursor: pointer;
+}
+
+.donate-item:hover {
+	transform: scale(1.07);
+}
+
+
+.donate-item img {
+	width: 120%;  /* немного больше контейнера */
+	height: 120%;
+	object-fit: contain;
+}
+
+
+
+

@@ -8,6 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useLang } from "./Context/LangContext";
 import { useScrollbarWidth } from "$hooks/useScrollbarWidth";
+import DonatePage from "./info/DonatePage/DonatePage";
 
 
 const Header = () => {
@@ -21,11 +22,14 @@ const Header = () => {
 
 	// Открытие окна
 	function openPopup() {
-		console.log("Попап відкривається");
 		document.body.classList.add("popup-active");
-		document.querySelector(".wrapper").style.paddingRight = scrollbarWidth + "px";
-		document.querySelector(".header").style.paddingRight = scrollbarWidth + "px";
+		document.querySelector(".wrapper")?.style.setProperty("padding-right", scrollbarWidth + "px");
+		document.querySelector(".header")?.style.setProperty("padding-right", scrollbarWidth + "px");
+	
+		const event = new Event("openDonatePopup");
+		window.dispatchEvent(event);
 	}
+	
 
 	const handleLanguageChange = (language) => {
 		let currentPath = location;
@@ -129,6 +133,7 @@ const Header = () => {
 					</div>
 				</div>
 			</div>
+			<DonatePage />	
 		</header>
 	);
 };
